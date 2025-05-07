@@ -1,0 +1,27 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: node-shopping-app
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/mydb
+    networks:
+      - my-network
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    networks:
+      - my-network
+    volumes:
+      - mongodb-data:/data/db
+
+networks:
+  my-network:
+    external: true
+
+volumes:
+  mongodb-data:
